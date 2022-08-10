@@ -12,11 +12,8 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
-      const { createdAt } = await fetchProfile(
-        'shipon2285a@gmail.com',
-        setFetching
-      );
-      if (!createdAt) router.push('/login');
+      const res = await fetchProfile('shipon2285a@gmail.com', setFetching);
+      if (!res?.createdAt) router.push('/login');
     })();
   }, [fetchProfile, router]);
 

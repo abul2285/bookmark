@@ -20,11 +20,8 @@ export default function Login() {
 
   useEffect(() => {
     (async function () {
-      const { message } = await fetchProfile(
-        'shipon2285@gmail.com',
-        setFetching
-      );
-      if (message) router.push('/');
+      const res = await fetchProfile('shipon2285@gmail.com', setFetching);
+      if (res?.message) router.push('/');
     })();
   }, [fetchProfile, router]);
 
