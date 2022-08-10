@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  REPOSITORY: ghcr.io/dorik/bookmark
+  REPOSITORY: ghcr.io/abul2285/bookmark
 
 jobs:
   publish-docker:
