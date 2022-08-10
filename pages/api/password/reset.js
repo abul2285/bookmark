@@ -1,6 +1,6 @@
 import {
-  SignUpCommand,
   CognitoIdentityProviderClient,
+  ConfirmForgotPasswordCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 
 const { COGNITO_REGION, COGNITO_APP_CLIENT_ID } = process.env;
@@ -10,6 +10,7 @@ export default async function handler(req, res) {
 
   const params = {
     ClientId: COGNITO_APP_CLIENT_ID,
+    ConfirmationCode: req.body.code,
     Password: req.body.password,
     Username: req.body.username,
   };
@@ -17,10 +18,11 @@ export default async function handler(req, res) {
   const cognitoClient = new CognitoIdentityProviderClient({
     region: COGNITO_REGION,
   });
-  const signUpCommand = new SignUpCommand(params);
+  const confirmForgotPasswordCommand = new ConfirmForgotPasswordCommand(params);
 
   try {
-    const response = await cognitoClient.send(signUpCommand);
+    const response = await cognitoClient.send(confirmForgotPasswordCommand);
+    console.log(response);
     return res.status(response['$metadata'].httpStatusCode).send();
   } catch (err) {
     console.log(err);
@@ -29,5 +31,3 @@ export default async function handler(req, res) {
       .json({ message: err.toString() });
   }
 }
-
-//@o2Zb4WY#zpQ
