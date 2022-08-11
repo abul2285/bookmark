@@ -3,15 +3,17 @@ import { useEffect, useState } from 'react';
 import { Button, Col, Form, Input, Row, Typography } from 'antd';
 
 import useAuth from '../hooks/useAuth';
+import { getUsername } from '../utils/storage';
 
 const { Text } = Typography;
 
 export default function Login() {
   const router = useRouter();
-  const { success } = router.query;
-  const [fetching, setFetching] = useState(true);
   const [loading, setLoading] = useState();
   const { login, fetchProfile } = useAuth();
+  const [fetching, setFetching] = useState(true);
+
+  const { success } = router.query;
 
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -20,8 +22,10 @@ export default function Login() {
 
   useEffect(() => {
     (async function () {
-      const res = await fetchProfile('shipon2285@gmail.com', setFetching);
-      if (res?.message) router.push('/');
+      const username = getUsername();
+      if (!username) return setFetching(false);
+      const res = await fetchProfile(username, setFetching);
+      if (res?.username) router.push('/');
     })();
   }, [fetchProfile, router]);
 

@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { setUsername } from '../utils/storage';
 
 export default function useRegister() {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function useRegister() {
     })
       .then((res) => {
         if (!res.ok) throw res;
+        setUsername(values.username);
         router.push(
           {
             pathname: '/confirm',

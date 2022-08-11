@@ -1,8 +1,10 @@
-import useRegister from '../hooks/useRegister';
-import { Button, Col, Form, Input, Row, Typography } from 'antd';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { Button, Col, Form, Input, Row, Typography } from 'antd';
+
 import useAuth from '../hooks/useAuth';
+import { getUsername } from '../utils/storage';
+import useRegister from '../hooks/useRegister';
 
 const { Text } = Typography;
 
@@ -20,8 +22,10 @@ export default function Register() {
 
   useEffect(() => {
     (async function () {
-      const res = await fetchProfile('shipon2285@gmail.com', setFetching);
-      if (res?.message) router.push('/');
+      const username = getUsername();
+      if (!username) return setFetching(false);
+      const res = await fetchProfile(username, setFetching);
+      if (res?.username) router.push('/');
     })();
   }, [fetchProfile, router]);
 
@@ -46,10 +50,10 @@ export default function Register() {
             </Form.Item>
 
             <Button
+              block
+              size='large'
               type='primary'
               htmlType='submit'
-              size='large'
-              block
               loading={loading}>
               Submit
             </Button>

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import useAuth from '../hooks/useAuth';
+import { getUsername } from '../utils/storage';
 
 export default function Home() {
   const router = useRouter();
@@ -12,8 +13,10 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
-      const res = await fetchProfile('shipon2285a@gmail.com', setFetching);
-      if (!res?.createdAt) router.push('/login');
+      const username = getUsername();
+      if (!username) return setFetching(false);
+      const res = await fetchProfile(username, setFetching);
+      if (!res?.username) router.push('/login');
     })();
   }, [fetchProfile, router]);
 
