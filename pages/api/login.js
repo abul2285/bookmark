@@ -27,13 +27,19 @@ export default async function handler(req, res) {
   try {
     const response = await cognitoClient.send(adminInitiateAuthCommand);
     console.log(response);
-    return res.status(response['$metadata'].httpStatusCode).json({
-      ...response.AuthenticationResult,
+    return res.status(200).json({
+      success: true,
     });
+    // return res.status(response['$metadata'].httpStatusCode).json({
+    //   ...response.AuthenticationResult,
+    // });
   } catch (err) {
     console.log(err);
-    return res
-      .status(err['$metadata'].httpStatusCode)
-      .json({ message: err.toString() });
+    return res.status(401).json({
+      success: false,
+    });
+    // return res
+    //   .status(err['$metadata'].httpStatusCode)
+    //   .json({ message: err.toString() });
   }
 }
