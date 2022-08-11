@@ -6,6 +6,7 @@ import {
 const { COGNITO_REGION, COGNITO_USER_POOL_ID } = process.env;
 
 export default async function handler(req, res) {
+  console.log({ COGNITO_REGION, COGNITO_USER_POOL_ID });
   const { username } = req.query;
 
   const input = {
