@@ -3,8 +3,13 @@ import {
   AdminInitiateAuthCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 
-const { COGNITO_REGION, COGNITO_APP_CLIENT_ID, COGNITO_USER_POOL_ID } =
-  process.env;
+const {
+  COGNITO_REGION,
+  AWS_ACCESS_KEY_ID,
+  COGNITO_USER_POOL_ID,
+  COGNITO_APP_CLIENT_ID,
+  AWS_SECRET_ACCESS_KEY,
+} = process.env;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send();
@@ -19,8 +24,14 @@ export default async function handler(req, res) {
     },
   };
 
+  console.log({ params });
+
   const cognitoClient = new CognitoIdentityProviderClient({
     region: COGNITO_REGION,
+    credentials: {
+      accessKeyId: AWS_ACCESS_KEY_ID,
+      secretAccessKey: AWS_SECRET_ACCESS_KEY,
+    },
   });
   const adminInitiateAuthCommand = new AdminInitiateAuthCommand(params);
 
