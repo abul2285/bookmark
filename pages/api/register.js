@@ -17,7 +17,9 @@ export default async function handler(req, res) {
 
   try {
     const response = await cognitoClient.send(signUpCommand);
-    return res.status(response['$metadata'].httpStatusCode).send();
+    return res
+      .status(response['$metadata'].httpStatusCode)
+      .send({ success: true, message: 'User registered successfully' });
   } catch (err) {
     console.log(err);
     return res

@@ -1,19 +1,17 @@
-import { useRouter } from 'next/router';
-import { Button, Col, Form, Input, Row } from 'antd';
+import { Button, Col, Form, Input, Row, Typography } from 'antd';
 
-import useRegister from '../hooks/useRegister';
-import { useState } from 'react';
+import { getUsername } from '../utils/storage';
+import { useConfirm } from '../modules/auth/auth.query';
+
+const { Text } = Typography;
 
 export default function Confirm() {
-  const router = useRouter();
-  const { username = 'shipon2285@gmail.com' } = router.query;
-  const [loading, setLoading] = useState();
-
-  const { confirm } = useRegister();
+  const { mutate, isLoading, error } = useConfirm();
 
   const handleSubmit = async (values) => {
-    setLoading(true);
-    confirm({ ...values, username }, setLoading);
+    const username = getUsername();
+    if (!username) return;
+    mutate({ ...values, username });
   };
 
   return (
@@ -28,13 +26,14 @@ export default function Confirm() {
               <Input size='large' />
             </Form.Item>
             <Button
+              block
+              size='large'
               type='primary'
               htmlType='submit'
-              size='large'
-              block
-              loading={loading}>
+              loading={isLoading}>
               Confirm
             </Button>
+            {error?.message && <Text type='danger'>{error.message}</Text>}
           </Form>
         </div>
       </Col>

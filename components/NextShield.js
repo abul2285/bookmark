@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { verifyPath, getAccessRoute } from '../libs/routes';
 import { useGetUser } from '../modules/auth/auth.query';
+import { verifyPath, getAccessRoute } from '../libs/routes';
 
 export function NextShield({
   RBAC,
