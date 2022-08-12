@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import { PutCommand } from '@aws-sdk/lib-dynamodb';
 
-import { httpMethodEnums } from '../../../consts/HTTP';
+import { httpMethodEnums } from '../../../constants/HTTP';
 import { ddbDocClient } from '../../../libs/ddbDocClient';
 
 const { TABLE_NAME } = process.env;

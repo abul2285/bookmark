@@ -1,17 +1,10 @@
-import { useState } from 'react';
 import { Button, Col, Form, Input, Row, Typography } from 'antd';
-
-import useRegister from '../hooks/useRegister';
+import { useRegister } from '../modules/auth/auth.query';
 
 const { Text } = Typography;
 
 export default function Register() {
-  const { register } = useRegister();
-  const [loading, setLoading] = useState();
-
-  const handleSubmit = (values) => {
-    register(values, setLoading);
-  };
+  const { mutate, isLoading, error, data } = useRegister();
 
   return (
     <Row style={{ marginTop: 100 }}>
@@ -20,7 +13,7 @@ export default function Register() {
           style={{
             padding: '10px',
           }}>
-          <Form onFinish={handleSubmit} layout='vertical'>
+          <Form onFinish={mutate} layout='vertical'>
             <Form.Item label='Email' name='username'>
               <Input type='email' size='large' />
             </Form.Item>
@@ -36,11 +29,12 @@ export default function Register() {
               size='large'
               type='primary'
               htmlType='submit'
-              loading={loading}>
+              loading={isLoading}>
               Submit
             </Button>
 
             <Text> Already have an account? Log in</Text>
+            {error?.message && <Text type='danger'>{error.message}</Text>}
           </Form>
         </div>
       </Col>

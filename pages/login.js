@@ -1,22 +1,15 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { Button, Col, Form, Input, Row, Typography } from 'antd';
 
-import useAuth from '../hooks/useAuth';
+import { useLogin } from '../modules/auth/auth.query';
 
 const { Text } = Typography;
 
 export default function Login() {
   const router = useRouter();
-  const [loading, setLoading] = useState();
-  const { login } = useAuth();
+  const { mutate, isLoading } = useLogin();
 
   const { success } = router.query;
-
-  const handleSubmit = async (values) => {
-    setLoading(true);
-    await login({ ...values }, setLoading);
-  };
 
   return (
     <Row style={{ marginTop: 100 }}>
@@ -32,7 +25,7 @@ export default function Login() {
           </div>
         )}
 
-        <Form onFinish={handleSubmit} layout='vertical'>
+        <Form onFinish={mutate} layout='vertical'>
           <Form.Item name='username' label='Email'>
             <Input type='email' size='large' />
           </Form.Item>
@@ -41,11 +34,11 @@ export default function Login() {
           </Form.Item>
 
           <Button
-            type='primary'
-            htmlType='submit'
             block
             size='large'
-            loading={loading}>
+            type='primary'
+            htmlType='submit'
+            loading={isLoading}>
             Submit
           </Button>
 
