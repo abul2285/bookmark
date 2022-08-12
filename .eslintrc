@@ -1,0 +1,17 @@
+{
+    "env": {
+        "node": true,
+        "browser": true,
+        "es6": true
+    },
+    "globals": {
+        "Promise": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "extends": ["next", "eslint:recommended", "next/core-web-vitals"],
+    "rules": {
+        "no-unused-vars": "warn"
+    }
+}

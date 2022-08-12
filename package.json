@@ -10,10 +10,14 @@
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.143.0",
+    "@aws-sdk/client-dynamodb": "^3.145.0",
+    "@aws-sdk/lib-dynamodb": "^3.145.0",
     "antd": "^4.22.4",
+    "nanoid": "^4.0.0",
     "next": "12.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-query": "^3.23.2",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
