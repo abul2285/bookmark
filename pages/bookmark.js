@@ -2,6 +2,7 @@ import Head from 'next/head';
 import React, { useState } from 'react';
 import { Button, Col, Divider, List, Row, Typography } from 'antd';
 
+import Loading from '../components/Loading';
 import { useGetBookmarks } from '../modules/bookmark/bookmark.query';
 import BookmarkItem from '../modules/bookmark/components/BookmarkItem';
 import BookmarkCreate from '../modules/bookmark/components/BookmarkCreate';
@@ -10,7 +11,8 @@ const Bookmark = () => {
   const { data, isLoading } = useGetBookmarks();
   const [visible, setVisible] = useState(false);
 
-  if (isLoading || !data) return <p>Loading...</p>;
+  if (isLoading || !data) return <Loading />;
+
   return (
     <Row justify='center' style={{ paddingTop: 20 }}>
       <Head>
