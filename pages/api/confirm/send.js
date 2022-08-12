@@ -3,7 +3,7 @@ import {
   ResendConfirmationCodeCommand,
 } from '@aws-sdk/client-cognito-identity-provider';
 
-const { COGNITO_REGION, COGNITO_APP_CLIENT_ID } = process.env;
+const { REGION, COGNITO_APP_CLIENT_ID } = process.env;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send();
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   };
 
   const cognitoClient = new CognitoIdentityProviderClient({
-    region: COGNITO_REGION,
+    region: REGION,
   });
   const resendConfirmationCodeCommand = new ResendConfirmationCodeCommand(
     params

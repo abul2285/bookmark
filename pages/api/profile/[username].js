@@ -1,9 +1,8 @@
-import {
-  AdminGetUserCommand,
-  CognitoIdentityProviderClient,
-} from '@aws-sdk/client-cognito-identity-provider';
+import { AdminGetUserCommand } from '@aws-sdk/client-cognito-identity-provider';
 
-const { COGNITO_REGION, COGNITO_USER_POOL_ID } = process.env;
+import { cognitoClient } from '../../../libs/cognitoClient';
+
+const { COGNITO_USER_POOL_ID } = process.env;
 
 export default async function handler(req, res) {
   const { username } = req.query;
@@ -13,9 +12,6 @@ export default async function handler(req, res) {
     Username: username,
   };
 
-  const cognitoClient = new CognitoIdentityProviderClient({
-    region: COGNITO_REGION,
-  });
   const command = new AdminGetUserCommand(input);
 
   try {

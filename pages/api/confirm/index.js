@@ -1,9 +1,8 @@
-import {
-  CognitoIdentityProviderClient,
-  ConfirmSignUpCommand,
-} from '@aws-sdk/client-cognito-identity-provider';
+import { ConfirmSignUpCommand } from '@aws-sdk/client-cognito-identity-provider';
 
-const { COGNITO_REGION, COGNITO_APP_CLIENT_ID } = process.env;
+import { cognitoClient } from '../../../libs/cognitoClient';
+
+const { COGNITO_APP_CLIENT_ID } = process.env;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send();
@@ -14,9 +13,6 @@ export default async function handler(req, res) {
     Username: req.body.username,
   };
 
-  const cognitoClient = new CognitoIdentityProviderClient({
-    region: COGNITO_REGION,
-  });
   const confirmSignUpCommand = new ConfirmSignUpCommand(params);
 
   try {
