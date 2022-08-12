@@ -4,16 +4,16 @@ import { ddbDocClient } from '../../../libs/ddbDocClient.js';
 
 const { TABLE_NAME } = process.env;
 
-export const scanTable = async (res) => {
+export const scanTable = async (_, res) => {
   const params = { TableName: TABLE_NAME };
   try {
     const data = await ddbDocClient.send(new ScanCommand(params));
-    res.send(data.Items);
+    return res.send(data.Items);
   } catch (err) {
-    return {
+    return res.send({
       success: false,
       message: err.toString(),
-    };
+    });
   }
 };
 

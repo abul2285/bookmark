@@ -10,7 +10,7 @@ const handler = async (req, res) => {
   if (req.method === httpMethodEnums.POST) {
     const params = {
       TableName: TABLE_NAME,
-      Item: { id: nanoid(12), ...req.body },
+      Item: { id: nanoid(12), ...JSON.parse(req.body) },
     };
     try {
       const response = await ddbDocClient.send(new PutCommand(params));

@@ -21,14 +21,15 @@ const getItem = async (id) => {
   }
 };
 
-export const updateItem = async (id, { title, description }) => {
+export const updateItem = async (id, { title, description, link }) => {
   const params = {
     TableName: TABLE_NAME,
     Key: { id },
-    UpdateExpression: 'set title = :t, description = :d',
+    UpdateExpression: 'set title = :t, description = :d, link = :l',
     ExpressionAttributeValues: {
       ':t': title,
       ':d': description,
+      ':l': link,
     },
   };
   try {
@@ -65,7 +66,7 @@ async function handler(req, res) {
     case httpMethodEnums.GET:
       return res.send(await getItem(id));
     case httpMethodEnums.PUT:
-      return res.send(await updateItem(id, req.body));
+      return res.send(await updateItem(id, JSON.parse(req.body)));
     case httpMethodEnums.DELETE:
       return res.send(await deleteItem(id));
   }
