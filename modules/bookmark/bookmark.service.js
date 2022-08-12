@@ -1,4 +1,4 @@
-import { httpMethodEnums } from '../../consts/HTTP';
+import { httpMethodEnums } from '../../constants/HTTP';
 
 export const getBookmarkById = async ({ queryKey }) => {
   console.log({ queryKey });
